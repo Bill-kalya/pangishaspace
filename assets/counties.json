@@ -1,0 +1,227 @@
+{
+  "counties": [
+    {
+      "name": "Kisumu",
+      "capital": "Kisumu",
+      "code": 42,
+      "sub_counties": [
+        {
+          "name": "Kisumu Central",
+          "streets": ["Jaramogi Oginga Odinga Street", "Tom Mboya Street", "Jomo Kenyatta Street"]
+        },
+        {
+          "name": "Kisumu East",
+          "streets": ["Oginga Odinga Road", "Obote Road", "Odera Street"]
+        },
+        {
+          "name": "Kisumu West",
+          "streets": ["Accra Street", "Aga Khan Road", "Ochieng Avenue"]
+        },
+        {
+          "name": "Muhoroni",
+          "streets": ["Kisumu–Chemelil–Muhoroni Road", "Elburgon Road"]
+        },
+        {
+          "name": "Nyakach",
+          "streets": ["Katito Road", "Sondu Road"]
+        },
+        {
+          "name": "Nyando",
+          "streets": ["Awasi Road", "Ahero Road"]
+        },
+        {
+          "name": "Seme",
+          "streets": ["Holo Road", "Akala Road"]
+        }
+      ]
+    },
+    {
+      "name": "Mombasa",
+      "capital": "Mombasa City",
+      "code": 1,
+      "sub_counties": [
+        {
+          "name": "Changamwe",
+          "streets": ["Port Reitz Road", "Airport Road"]
+        },
+        {
+          "name": "Jomvu",
+          "streets": ["Jomvu Road", "Joe Kadenge Road"]
+        },
+        {
+          "name": "Kisauni",
+          "streets": ["Makadara Road", "Magongo Road"]
+        },
+        {
+          "name": "Likoni",
+          "streets": ["Likoni Road", "Ferry Road"]
+        },
+        {
+          "name": "Mvita",
+          "streets": ["Moi Avenue", "Jomo Kenyatta Avenue", "Haile Selassie Avenue", "Sir Mbarak al Hinawy Road"]
+        },
+        {
+          "name": "Nyali",
+          "streets": ["Links Road", "Nyali Road"]
+        }
+      ]
+    },
+    {
+      "name": "Nairobi",
+      "capital": "Nairobi City",
+      "code": 47,
+      "sub_counties": [
+        {
+          "name": "Westlands",
+          "streets": ["Waiyaki Way", "Parklands Road", "Mpaka Road"]
+        },
+        {
+          "name": "Dagoretti North",
+          "streets": ["Ngong Road", "Kabarnet Road"]
+        },
+        {
+          "name": "Dagoretti South",
+          "streets": ["Naivasha Road", "Gitanga Road"]
+        },
+        {
+          "name": "Embakasi Central",
+          "streets": ["Kangundo Road", "Savannah Road"]
+        },
+        {
+          "name": "Embakasi East",
+          "streets": ["Airport North Road", "Fedha Road"]
+        },
+        {
+          "name": "Embakasi North",
+          "streets": ["Kariobangi Road", "Dandora Road"]
+        },
+        {
+          "name": "Embakasi South",
+          "streets": ["Pipeline Road", "Outer Ring Road"]
+        },
+        {
+          "name": "Embakasi West",
+          "streets": ["Kayole Spine Road", "Komarock Road"]
+        },
+        {
+          "name": "Kamukunji",
+          "streets": ["Luthuli Avenue", "Kariokor Road"]
+        },
+        {
+          "name": "Kasarani",
+          "streets": ["Thika Road", "Kasarani Road"]
+        },
+        {
+          "name": "Kibra",
+          "streets": ["Kibra Drive", "Makina Road"]
+        },
+        {
+          "name": "Lang'ata",
+          "streets": ["Langata Road", "Karen Road"]
+        },
+        {
+          "name": "Makadara",
+          "streets": ["Jogoo Road", "Hamza Road"]
+        },
+        {
+          "name": "Mathare",
+          "streets": ["Juja Road", "Mathare North Road"]
+        },
+        {
+          "name": "Roysambu",
+          "streets": ["Zimmerman Road", "TRM Drive"]
+        },
+        {
+          "name": "Ruaraka",
+          "streets": ["Baba Dogo Road", "Outer Ring Road"]
+        },
+        {
+          "name": "Starehe",
+          "streets": ["Moi Avenue", "Tom Mboya Street", "Biashara Street"]
+        }
+      ]
+    },
+    {
+      "name": "Nakuru",
+      "capital": "Nakuru",
+      "code": 32,
+      "sub_counties": [
+        {
+          "name": "Nakuru Town East",
+          "streets": ["Kenyatta Avenue", "Mburu Gichua Road"]
+        },
+        {
+          "name": "Nakuru Town West",
+          "streets": ["Nairobi Road", "Oginga Odinga Road"]
+        },
+        {
+          "name": "Naivasha",
+          "streets": ["Kenyatta Avenue", "Moi Road"]
+        },
+        {
+          "name": "Gilgil",
+          "streets": ["Gilgil Road", "Moi Kaserani Road"]
+        },
+        {
+          "name": "Molo",
+          "streets": ["Molo-Sachangwan Road", "Elburgon Road"]
+        },
+        {
+          "name": "Njoro",
+          "streets": ["Egerton Road", "Mau Narok Road"]
+        },
+        {
+          "name": "Bahati",
+          "streets": ["Bahati Road", "Subukia Road"]
+        },
+        {
+          "name": "Subukia",
+          "streets": ["Subukia Road", "Waseges Road"]
+        },
+        {
+          "name": "Kuresoi North",
+          "streets": ["Sirikwa Road", "Olenguruone Road"]
+        },
+        {
+          "name": "Kuresoi South",
+          "streets": ["Keringet Road", "Tinet Road"]
+        },
+        {
+          "name": "Rongai",
+          "streets": ["Rongai Road", "Ngata Road"]
+        }
+      ]
+    },
+    {
+      "name": "Uasin Gishu",
+      "capital": "Eldoret",
+      "code": 27,
+      "sub_counties": [
+        {
+          "name": "Turbo",
+          "streets": ["Turbo-Webuye Road", "Sugoi Road"]
+        },
+        {
+          "name": "Soy",
+          "streets": ["Moi’s Bridge Road", "Ziwa Road"]
+        },
+        {
+          "name": "Kapseret",
+          "streets": ["Kapseret Road", "Racecourse Road"]
+        },
+        {
+          "name": "Kesses",
+          "streets": ["Kesses Road", "Moi University Road"]
+        },
+        {
+          "name": "Moiben",
+          "streets": ["Moiben Road", "Sergoit Road"]
+        },
+        {
+          "name": "Ainabkoi",
+          "streets": ["Ainabkoi Road", "Cheptiret Road"]
+        }
+      ]
+    }
+  ]
+}
