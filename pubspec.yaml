@@ -40,7 +40,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+    
+  http: ^1.2.0
+  flutter_secure_storage: ^9.0.0
+  jwt_decoder: ^2.0.1
+  google_maps_flutter: ^2.6.0
+  geolocator: ^11.0.0
+  google_maps_flutter_heatmap: ^1.0.0
+  fl_chart: ^0.66.0
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

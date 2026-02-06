@@ -1,16 +1,11 @@
-// lib/screens/welcome_screen.dart
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:pangishaspace/screens/vendor_registration.dart';
-import 'package:pangishaspace/screens/login_screen.dart';
-import 'package:pangishaspace/screens/public_reporter.dart';
-import 'package:pangishaspace/screens/admin_registration.dart';
-import 'package:pangishaspace/screens/vendor_dashboard.dart';
 
-const Color _mint = Color(0xFFCFF7D5); // light green container
-const Color _deep = Color(0xFF234D2F); // darkest green (text/btns)
-const Color _deep2 = Color(0xFF2E5E3A); // button body
-const double _radius = 28;
+import 'vendor_registration.dart';
+import 'login_screen.dart';
+import 'public_reporter.dart';
+import 'admin_registration.dart';
+import 'vendor_dashboard.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -19,30 +14,114 @@ class WelcomeScreen extends StatefulWidget {
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
   String? _selectedRole;
 
-  final List<String> _roles = ['Vendor', 'Public Reporter', 'Admin'];
+  late AnimationController _animController;
+  late Animation<double> _scaleAnim;
+
+  final List<_RoleItem> _roles = const [
+    _RoleItem('Vendor', Icons.store),
+    _RoleItem('Public Reporter', Icons.report),
+    _RoleItem('Admin', Icons.admin_panel_settings),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 180),
+    );
+    _scaleAnim = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeOutBack,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
+  }
+
+  void _goLogin() {
+    if (_selectedRole == null) {
+      _toast('Please select a role first');
+      return;
+    }
+
+    if (_selectedRole == 'Vendor') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const VendorDashboardScreen()),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    }
+  }
+
+  void _goRegister() {
+    if (_selectedRole == null) {
+      _toast('Please select a role first');
+      return;
+    }
+
+    late Widget screen;
+    switch (_selectedRole) {
+      case 'Vendor':
+        screen = const VendorRegistration();
+        break;
+      case 'Public Reporter':
+        screen = const PublicReporter();
+        break;
+      case 'Admin':
+        screen = const AdminRegistrationScreen();
+        break;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => screen),
+    );
+  }
+
+  void _toast(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    final bg = isDark ? const Color(0xFF0F1F16) : const Color(0xFFCFF7D5);
+    final deep = isDark ? Colors.white : const Color(0xFF234D2F);
+    final pill = isDark ? const Color(0xFF1E3A2A) : const Color(0xFF2E5E3A);
+
     final w = MediaQuery.of(context).size.width;
-    final containerWidth = math.min(w * 0.92, 820.0);
+    final boxWidth = math.min(w * 0.92, 820.0);
 
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Container(
-            width: containerWidth,
+            width: boxWidth,
             padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 30),
             decoration: BoxDecoration(
-              color: _mint,
+              color: bg,
               borderRadius: BorderRadius.circular(32),
               boxShadow: const [
                 BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 16,
+                  blurRadius: 18,
+                  color: Colors.black26,
                   offset: Offset(0, 8),
                 ),
               ],
@@ -52,168 +131,66 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: [
                 Text(
                   'welcome to',
-                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 34,
                     fontWeight: FontWeight.w700,
-                    color: _deep,
+                    color: deep,
                   ),
                 ),
-                const SizedBox(height: 4),
                 Text(
                   'Pangisha space',
-                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w800,
-                    color: _deep,
+                    color: deep,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
                 Text(
                   '"Organize, Legalize, Thrive."',
-                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,
                     fontStyle: FontStyle.italic,
-                    color: _deep.withOpacity(0.9),
+                    color: deep.withValues(alpha: 0.85),
                   ),
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 20),
 
-                // Illustration
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 220),
-                  child: AspectRatio(
-                    aspectRatio: 1.1,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/icons/vendor_icon.png',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
+                // illustration
+                SizedBox(
+                  height: 200,
+                  child: Image.asset(
+                    'assets/icons/vendor_icon.png',
+                    fit: BoxFit.contain,
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 14),
 
-                // Role selection dropdown
-                Center(
-                  child: Container(
-                    width: 220,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: _deep2,
-                      borderRadius: BorderRadius.circular(_radius),
-                    ),
-                    child: DropdownButton<String>(
-                      value: _selectedRole,
-                      hint: const Text(
-                        'Select Role',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      isExpanded: true,
-                      underline: const SizedBox(),
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.white,
-                      ),
-                      dropdownColor: _deep2,
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                      items: _roles.map((role) {
-                        return DropdownMenuItem<String>(
-                          value: role,
-                          child: Text(role),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedRole = value;
-                        });
-                      },
-                    ),
+                // animated role dropdown
+                ScaleTransition(
+                  scale: _scaleAnim,
+                  child: _RoleDropdown(
+                    roles: _roles,
+                    value: _selectedRole,
+                    pillColor: pill,
+                    textColor: Colors.white,
+                    onTap: () => _animController.forward(from: 0),
+                    onChanged: (val) {
+                      setState(() => _selectedRole = val);
+                    },
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 26),
 
-                // Bottom Login / Register buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: 140,
-                      child: _WidePill(
-                        label: 'Login',
-                        onTap: () {
-                          if (_selectedRole == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Please select a role first'),
-                              ),
-                            );
-                            return;
-                          }
-                          if (_selectedRole == 'Vendor') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const VendorDashboardScreen(),
-                              ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    SizedBox(
-                      width: 140,
-                      child: _WidePill(
-                        label: 'Register',
-                        onTap: () {
-                          if (_selectedRole == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Please select a role first'),
-                              ),
-                            );
-                            return;
-                          }
-                          Widget targetScreen;
-                          switch (_selectedRole) {
-                            case 'Vendor':
-                              targetScreen = const VendorRegistration();
-                              break;
-                            case 'Public Reporter':
-                              targetScreen = const PublicReporter();
-                              break;
-                            case 'Admin':
-                              targetScreen = const AdminRegistrationScreen();
-                              break;
-                            default:
-                              targetScreen = const LoginScreen();
-                          }
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => targetScreen,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    _PillButton(label: 'Login', color: pill, onTap: _goLogin),
+                    const SizedBox(width: 18),
+                    _PillButton(
+                        label: 'Register', color: pill, onTap: _goRegister),
                   ],
                 ),
               ],
@@ -225,22 +202,84 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 }
 
-// Reusable wide pill widget
-class _WidePill extends StatelessWidget {
-  final String label;
+/* -------------------- UI WIDGETS -------------------- */
+
+class _RoleDropdown extends StatelessWidget {
+  final List<_RoleItem> roles;
+  final String? value;
+  final Color pillColor;
+  final Color textColor;
   final VoidCallback onTap;
-  const _WidePill({required this.label, required this.onTap});
+  final ValueChanged<String?> onChanged;
+
+  const _RoleDropdown({
+    required this.roles,
+    required this.value,
+    required this.pillColor,
+    required this.textColor,
+    required this.onTap,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: _deep2,
-      borderRadius: BorderRadius.circular(28),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(28),
+    return SizedBox(
+      width: 240,
+      child: DropdownButtonFormField<String>(
+        value: value,
         onTap: onTap,
-        child: SizedBox(
-          height: 44,
+        dropdownColor: pillColor,
+        icon: Icon(Icons.expand_more, color: textColor),
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: pillColor,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(28),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        hint: Text('Select Role', style: TextStyle(color: textColor)),
+        style: TextStyle(color: textColor, fontSize: 16),
+        items: roles.map((r) {
+          return DropdownMenuItem(
+            value: r.label,
+            child: Row(
+              children: [
+                Icon(r.icon, color: textColor),
+                const SizedBox(width: 10),
+                Text(r.label),
+              ],
+            ),
+          );
+        }).toList(),
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
+
+class _PillButton extends StatelessWidget {
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _PillButton({
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 140,
+      height: 44,
+      child: Material(
+        color: color,
+        borderRadius: BorderRadius.circular(28),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(28),
+          onTap: onTap,
           child: Center(
             child: Text(
               label,
@@ -248,7 +287,6 @@ class _WidePill extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                letterSpacing: 0.2,
               ),
             ),
           ),
@@ -256,4 +294,12 @@ class _WidePill extends StatelessWidget {
       ),
     );
   }
+}
+
+/* -------------------- MODEL -------------------- */
+
+class _RoleItem {
+  final String label;
+  final IconData icon;
+  const _RoleItem(this.label, this.icon);
 }

@@ -1,4 +1,44 @@
 import 'package:flutter/material.dart';
+import '../auth/auth_service.dart';
+import 'admin_dashboard.dart';
+import 'vendor_dashboard.dart';
+import 'public_reporter.dart';
+
+final authService = AuthService();
+
+void handleLogin(BuildContext context, String email, String password) async {
+  final success = await authService.login(email, password);
+
+  if (!success) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid credentials')),
+    );
+    return;
+  }
+
+  final role = await authService.getRole();
+
+  if (role == 'ADMIN') {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => DashboardScreen(
+        isDarkMode: false,
+        onToggleTheme: () {},
+        userRole: 'ADMIN',
+      )),
+    );
+  } else if (role == 'VENDOR') {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const VendorDashboardScreen()),
+    );
+  } else {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const PublicReporter()),
+    );
+  }
+}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -77,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Handle login
+                        handleLogin(context, idController.text, passwordController.text);
                       }
                     },
                     style: ElevatedButton.styleFrom(
